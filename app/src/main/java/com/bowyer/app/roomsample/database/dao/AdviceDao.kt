@@ -1,21 +1,21 @@
 package com.bowyer.app.roomsample.database.dao
 
 import androidx.room.*
-import com.bowyer.app.roomsample.database.entity.AdviceEntity
+import com.bowyer.app.roomsample.database.entity.Advice
 import io.reactivex.Maybe
 
 @Dao
 interface AdviceDao {
 
-    @Query("SELECT * FROM " + AdviceEntity.TABLE)
-    fun getAll(): Maybe<List<AdviceEntity>>
+    @Query("SELECT * FROM " + Advice.TABLE)
+    fun getAll(): Maybe<List<Advice>>
 
     @Insert
-    fun insert(advice: AdviceEntity): Long
+    fun insert(advice: Advice): Long
 
     @Update
-    fun update(advice: AdviceEntity): Int
+    fun update(advice: Advice): Int
 
     @Delete
-    fun delete(advice: AdviceEntity)
+    fun delete(advice: Advice)
 }

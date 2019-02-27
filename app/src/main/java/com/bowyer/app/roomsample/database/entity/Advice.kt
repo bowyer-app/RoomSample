@@ -5,9 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class AdviceEntity {
+class Advice {
     companion object {
-        const val TABLE = "advice_entity"
+        const val TABLE = "advice"
         const val ID = "id"
         const val TITLE = "title"
         const val MEMO = "memo"
