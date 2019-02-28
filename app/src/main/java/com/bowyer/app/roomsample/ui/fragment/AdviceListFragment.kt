@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bowyer.app.roomsample.RoomApplication
 import com.bowyer.app.roomsample.database.AdviceRepository
-import com.bowyer.app.roomsample.database.AppDatabase
 import com.bowyer.app.roomsample.database.entity.Advice
 import com.bowyer.app.roomsample.database.entity.AdviceType
 import com.bowyer.app.roomsample.databinding.FragmentAdviceListBinding
@@ -38,8 +37,6 @@ class AdviceListFragment : Fragment(), AdviceAdapter.OnClickItemListener {
 
     @Inject
     lateinit var compositeDisposable: CompositeDisposable
-    @Inject
-    lateinit var appDatabase: AppDatabase
     @Inject
     lateinit var repository: AdviceRepository
     private lateinit var adviceAdapter: AdviceAdapter
@@ -87,7 +84,7 @@ class AdviceListFragment : Fragment(), AdviceAdapter.OnClickItemListener {
     override fun onCheckChanged(checked: Boolean, advice: Advice) {
         advice.done = !checked
         Completable.fromAction {
-            appDatabase.adviceDao().update(advice)
+            repository.update(advice)
         }.observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
