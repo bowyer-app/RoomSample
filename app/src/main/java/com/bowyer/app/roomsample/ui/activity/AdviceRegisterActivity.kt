@@ -16,7 +16,6 @@ import com.bowyer.app.roomsample.util.ext.toEditable
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
