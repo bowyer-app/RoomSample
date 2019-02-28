@@ -9,9 +9,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity
 data class Advice(
-    @PrimaryKey
-    @ColumnInfo(name = ID)
-    var id: Long = 0,
+    @PrimaryKey(autoGenerate = true)
+    var id: Long? = null,
 
     @ColumnInfo(name = TITLE)
     var title: String = "",
@@ -25,7 +24,6 @@ data class Advice(
     companion object {
         const val KEY = "key_advice"
         const val TABLE = "advice"
-        const val ID = "id"
         const val TITLE = "title"
         const val MEMO = "memo"
         const val DONE = "done"
