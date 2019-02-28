@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bowyer.app.roomsample.RoomApplication
+import com.bowyer.app.roomsample.database.AdviceRepository
 import com.bowyer.app.roomsample.database.AppDatabase
 import com.bowyer.app.roomsample.database.entity.Advice
 import com.bowyer.app.roomsample.database.entity.AdviceType
@@ -39,6 +40,8 @@ class AdviceListFragment : Fragment(), AdviceAdapter.OnClickItemListener {
     lateinit var compositeDisposable: CompositeDisposable
     @Inject
     lateinit var appDatabase: AppDatabase
+    @Inject
+    lateinit var repository: AdviceRepository
     private lateinit var adviceAdapter: AdviceAdapter
     private lateinit var binding: FragmentAdviceListBinding
     private lateinit var type: AdviceType
@@ -70,7 +73,7 @@ class AdviceListFragment : Fragment(), AdviceAdapter.OnClickItemListener {
 
     private fun initData() {
         type = arguments?.getSerializable(TYPE) as AdviceType
-        appDatabase.adviceDao().getAll()
+        repository.findAdviceList(type)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
