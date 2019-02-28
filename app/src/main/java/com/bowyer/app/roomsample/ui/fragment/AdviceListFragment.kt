@@ -11,7 +11,9 @@ import com.bowyer.app.roomsample.database.AppDatabase
 import com.bowyer.app.roomsample.database.entity.Advice
 import com.bowyer.app.roomsample.database.entity.AdviceType
 import com.bowyer.app.roomsample.databinding.FragmentAdviceListBinding
+import com.bowyer.app.roomsample.ui.activity.AdviceRegisterActivity
 import com.bowyer.app.roomsample.ui.adapter.AdviceAdapter
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -80,10 +82,21 @@ class AdviceListFragment : Fragment(), AdviceAdapter.OnClickItemListener {
 
 
     override fun onCheckChanged(checked: Boolean, advice: Advice) {
-
+        advice.done = !checked
+        Completable.fromAction {
+            appDatabase.adviceDao().update(advice)
+        }.observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onComplete = {
+                    // do nothing
+                },
+                onError = Timber::e
+            )
+            .addTo(compositeDisposable)
     }
 
     override fun onItemClick(advice: Advice) {
-
+        AdviceRegisterActivity.startActivity(activity!!, advice)
     }
 }
