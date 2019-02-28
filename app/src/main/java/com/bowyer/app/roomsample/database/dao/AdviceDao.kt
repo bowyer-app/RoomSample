@@ -2,13 +2,13 @@ package com.bowyer.app.roomsample.database.dao
 
 import androidx.room.*
 import com.bowyer.app.roomsample.database.entity.Advice
-import io.reactivex.Maybe
+import io.reactivex.Observable
 
 @Dao
 interface AdviceDao {
 
     @Query("SELECT * FROM " + Advice.TABLE)
-    fun getAll(): Maybe<List<Advice>>
+    fun getAll(): Observable<List<Advice>>
 
     @Insert
     fun insert(advice: Advice): Long

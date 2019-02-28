@@ -72,7 +72,7 @@ class AdviceListFragment : Fragment(), AdviceAdapter.OnClickItemListener {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
-                onSuccess = adviceAdapter::replaceAll,
+                onNext = adviceAdapter::replaceAll,
                 onError = Timber::e
             ).addTo(compositeDisposable)
 
