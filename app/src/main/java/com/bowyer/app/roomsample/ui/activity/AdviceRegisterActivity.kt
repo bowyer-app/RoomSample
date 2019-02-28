@@ -16,9 +16,10 @@ import com.bowyer.app.roomsample.util.ext.toEditable
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.CompletableObserver
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -39,6 +40,8 @@ class AdviceRegisterActivity : AppCompatActivity() {
 
     @Inject
     lateinit var repository: AdviceRepository
+    @Inject
+    lateinit var compositeDisposable: CompositeDisposable
     private var advice: Advice? = null
 
 
@@ -47,6 +50,11 @@ class AdviceRegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initToolBar()
         initData()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -116,19 +124,10 @@ class AdviceRegisterActivity : AppCompatActivity() {
             }
         }.observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {
-                    finish()
-                }
-
-                override fun onComplete() {
-                    // do nothing
-                }
-
-                override fun onError(e: Throwable) {
-                    Timber.e(e)
-                }
-            })
+            .subscribeBy(
+                onComplete = ::finish,
+                onError = Timber::e
+            ).addTo(compositeDisposable)
 
     }
 }
