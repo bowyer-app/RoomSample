@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bowyer.app.roomsample.R
 import com.bowyer.app.roomsample.RoomApplication
-import com.bowyer.app.roomsample.database.AppDatabase
+import com.bowyer.app.roomsample.database.AdviceRepository
 import com.bowyer.app.roomsample.database.entity.Advice
 import com.bowyer.app.roomsample.databinding.ActivityAdviceRegisterBinding
 import com.bowyer.app.roomsample.util.ext.toEditable
@@ -38,7 +38,7 @@ class AdviceRegisterActivity : AppCompatActivity() {
     }
 
     @Inject
-    lateinit var appDatabase: AppDatabase
+    lateinit var repository: AdviceRepository
     private var advice: Advice? = null
 
 
@@ -109,10 +109,10 @@ class AdviceRegisterActivity : AppCompatActivity() {
         Completable.fromAction {
             if (advice == null) {
                 val data = Advice(title = title, memo = memo)
-                appDatabase.adviceDao().insert(data)
+                repository.insert(data)
             } else {
                 val data = Advice(id = advice!!.id, title = title, memo = memo)
-                appDatabase.adviceDao().update(data)
+                repository.update(data)
             }
         }.observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
