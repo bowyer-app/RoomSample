@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bowyer.app.roomsample.databinding.FragmentMainBinding
 import com.bowyer.app.roomsample.ui.activity.AdviceRegisterActivity
+import com.bowyer.app.roomsample.ui.adapter.AdviceFragmentAdapter
+import com.google.android.material.tabs.TabLayout
 
 class MainFragment : Fragment() {
 
@@ -20,13 +22,24 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-
+        initTab()
         binding.fab.setOnClickListener { openRegister() }
         return binding.root
     }
 
-    fun openRegister() {
-        AdviceRegisterActivity.startActivity(activity!!, null)
+    private fun initTab() {
+        binding.adviceViewPager.apply {
+            adapter = AdviceFragmentAdapter(context!!, childFragmentManager)
+            offscreenPageLimit = 2
+        }
+        binding.tabs.apply {
+            tabMode = TabLayout.MODE_FIXED
+            tabGravity = TabLayout.GRAVITY_FILL
+            setupWithViewPager(binding.adviceViewPager)
+        }
     }
 
+    private fun openRegister() {
+        AdviceRegisterActivity.startActivity(activity!!, null)
+    }
 }

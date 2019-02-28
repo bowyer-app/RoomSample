@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">RoomSample</string>
+
+    <!-- Advice Register -->
     <string name="edit_advice_title_hint">Edit Title</string>
     <string name="edit_advice_hint">Edit Advice</string>
     <string name="advice_needs_title">Advice needs title</string>
     <string name="advice_needs_memo">Advice needs memo</string>
     <string name="menu_save">Save</string>
     <string name="title_advice_register">Advice Register</string>
+
+    <!-- Main -->
+    <string name="all">ALL</string>
+    <string name="done">DONE</string>
+    <string name="not_yet">NOT YET</string>
+
 </resources>
