@@ -18,4 +18,16 @@ class AdviceRepository @Inject constructor(
             adviceDao.get(type == AdviceType.DONE)
         }
     }
+
+    fun insert(advice: Advice): Long {
+        return adviceDao.insert(advice)
+    }
+
+    fun update(advice: Advice): Int {
+        return adviceDao.update(advice)
+    }
+
+    fun delete(advice: Advice) {
+        adviceDao.delete(advice)
+    }
 }
