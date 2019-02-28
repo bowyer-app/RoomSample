@@ -14,7 +14,13 @@ import com.bowyer.app.roomsample.database.entity.Advice
 import com.bowyer.app.roomsample.databinding.ActivityAdviceRegisterBinding
 import com.bowyer.app.roomsample.util.ext.toEditable
 import com.google.android.material.snackbar.Snackbar
+import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.CompletableObserver
+import io.reactivex.disposables.Disposable
+import timber.log.Timber
 import javax.inject.Inject
 
 class AdviceRegisterActivity : AppCompatActivity() {
@@ -33,8 +39,6 @@ class AdviceRegisterActivity : AppCompatActivity() {
     }
 
     @Inject
-    lateinit var compositDisposable: CompositeDisposable
-    @Inject
     lateinit var appDatabase: AppDatabase
     private var advice: Advice? = null
 
@@ -44,11 +48,6 @@ class AdviceRegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initToolBar()
         initData()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositDisposable.clear()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -108,13 +107,29 @@ class AdviceRegisterActivity : AppCompatActivity() {
             ).show()
             return
         }
-        if (advice == null) {
-            val data = Advice(title = title, memo = memo)
-            appDatabase.adviceDao().insert(data)
-        } else {
-            val data = Advice(id = advice!!.id, title = title, memo = memo)
-            appDatabase.adviceDao().update(data)
-        }
-        finish()
+        Completable.fromAction {
+            if (advice == null) {
+                val data = Advice(title = title, memo = memo)
+                appDatabase.adviceDao().insert(data)
+            } else {
+                val data = Advice(id = advice!!.id, title = title, memo = memo)
+                appDatabase.adviceDao().update(data)
+            }
+        }.observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(object : CompletableObserver {
+                override fun onSubscribe(d: Disposable) {
+                    finish()
+                }
+
+                override fun onComplete() {
+                    // do nothing
+                }
+
+                override fun onError(e: Throwable) {
+                    Timber.e(e)
+                }
+            })
+
     }
 }
