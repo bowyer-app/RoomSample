@@ -12,7 +12,8 @@ class DbModule {
     @Singleton
     internal fun provideAppDatabase(application: Application): AppDatabase {
         return Room.databaseBuilder(application, AppDatabase::class.java,
-            "room_sample_db").build()
+            "room_sample_db")
+            .build()
     }
 
 }
