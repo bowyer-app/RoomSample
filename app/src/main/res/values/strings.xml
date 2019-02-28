@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">RoomSample</string>
+    <string name="edit_advice_title_hint">Edit Title</string>
+    <string name="edit_advice_hint">Edit Advice</string>
+    <string name="advice_needs_title">Advice needs title</string>
+    <string name="advice_needs_memo">Advice needs memo</string>
+    <string name="menu_save">Save</string>
+    <string name="title_advice_register">Advice Register</string>
 </resources>
