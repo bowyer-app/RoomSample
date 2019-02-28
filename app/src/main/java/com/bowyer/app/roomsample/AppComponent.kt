@@ -12,7 +12,5 @@ import javax.inject.Singleton
 
 interface AppComponent : AndroidInjector<RoomApplication> {
 
-    fun inject(activity: MainActivity)
-
     fun inject(activity: AdviceRegisterActivity)
 }
