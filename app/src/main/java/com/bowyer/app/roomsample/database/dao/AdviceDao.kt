@@ -10,6 +10,9 @@ interface AdviceDao {
     @Query("SELECT * FROM " + Advice.TABLE)
     fun getAll(): Observable<List<Advice>>
 
+    @Query("SELECT * FROM ${Advice.TABLE} WHERE done = :isDone")
+    fun get(isDone: Boolean): Observable<List<Advice>>
+
     @Insert
     fun insert(advice: Advice): Long
 
