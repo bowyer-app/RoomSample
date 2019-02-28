@@ -52,14 +52,12 @@ class AdviceAdapter(private val onClickItemListener: OnClickItemListener) :
         val adviceTextAll = binding.adviceText
         if (adviceTextAll.visibility == View.GONE) {
             adviceTextAll.visibility = View.VISIBLE
-            binding.adviceText.visibility = View.GONE
             val rotateUpAnim = ObjectAnimator.ofPropertyValuesHolder(binding.allow,
                 PropertyValuesHolder.ofFloat(View.ROTATION, 0f, 180f))
             rotateUpAnim.duration = 250L
             rotateUpAnim.start()
         } else {
             adviceTextAll.visibility = View.GONE
-            binding.adviceText.visibility = View.VISIBLE
             val rotateDownAnim = ObjectAnimator.ofPropertyValuesHolder(binding.allow,
                 PropertyValuesHolder.ofFloat(View.ROTATION, 180f, 0f))
             rotateDownAnim.duration = 250L
