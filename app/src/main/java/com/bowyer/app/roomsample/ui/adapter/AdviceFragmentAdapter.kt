@@ -19,8 +19,8 @@ class AdviceFragmentAdapter(private val context: Context, fm: FragmentManager) :
 
     override fun getPageTitle(position: Int): CharSequence? {
         val titleId = when (position) {
-            1 -> R.string.not_yet
-            2 -> R.string.done
+            0 -> R.string.not_yet
+            1 -> R.string.done
             else -> R.string.all
         }
         return context.getString(titleId)

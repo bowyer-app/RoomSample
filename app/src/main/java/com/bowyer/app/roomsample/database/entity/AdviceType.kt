@@ -8,15 +8,15 @@ enum class AdviceType(val type: Int) {
     companion object {
         fun of(type: Int): AdviceType =
             when (type) {
-                1 -> NOT_YET
-                2 -> DONE
+                0 -> NOT_YET
+                1 -> DONE
                 else -> ALL
             }
 
         fun fromPage(page: Int): AdviceType =
             when (page) {
-                1 -> NOT_YET
-                2 -> DONE
+                0 -> NOT_YET
+                1 -> DONE
                 else -> ALL
             }
     }
